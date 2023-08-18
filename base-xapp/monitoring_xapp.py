@@ -23,10 +23,12 @@ def main():
     
 
     csv_filename = 'data.csv'
-
-    with open(csv_filename, 'w', newline='') as csvfile:
-        csvwriter = csv.writer(csvfile)
-        csvwriter.writerow(['Timestamp', 'Value'])
+    try:
+        with open(csv_filename, 'w', newline='') as csvfile:
+            csvwriter = csv.writer(csvfile)
+            csvwriter.writerow(['Timestamp', 'Value'])
+    except Exception as e:
+        print("Error creating CSV file:", e)
 
     try:
         while True:
