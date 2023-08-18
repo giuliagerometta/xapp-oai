@@ -24,7 +24,7 @@ def main():
     xapp_control_ricbypass.send_to_socket(buf)
     
 
-    csv_filename = '/base-xapp/data.csv'
+    csv_filename = 'data.csv'
     try:
         with open(csv_filename, 'w', newline='') as csvfile:
             csvwriter = csv.writer(csvfile)
@@ -61,7 +61,7 @@ def main():
 
 
 def append_to_csv(filename, data):
-    with open(filename, 'a', newline='') as csvfile:
+    with open(filename, 'a', newline=' ') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(data)
 
