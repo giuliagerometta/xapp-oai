@@ -3,10 +3,12 @@ import csv
 import time
 from e2sm_proto import *
 from time import sleep
+import os
 
 def main():    
 
     print("Encoding ric monitoring request")
+    print("Current working directory:", os.getcwd())
     
     # external message
     master_mess = RAN_message()
