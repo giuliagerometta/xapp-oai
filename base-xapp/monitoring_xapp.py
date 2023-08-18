@@ -14,7 +14,7 @@ def main():
 
     # internal message
     inner_mess = RAN_indication_request()
-    inner_mess.target_params.extend([RAN_parameter.GNB_ID, RAN_parameter.UE_LIST, RAN_parameter.CELL_LOAD])
+    inner_mess.target_params.extend([RAN_parameter.GNB_ID, RAN_parameter.UE_LIST])
 
     # assign and serialize
     master_mess.ran_indication_request.CopyFrom(inner_mess)
