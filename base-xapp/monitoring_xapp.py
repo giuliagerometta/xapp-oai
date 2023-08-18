@@ -34,13 +34,11 @@ def main():
             r_buf = xapp_control_ricbypass.receive_from_socket()
             ran_ind_resp = RAN_indication_response()
             ran_ind_resp.ParseFromString(r_buf)
+            value = ran_ind_resp 
             print(ran_ind_resp)
             sleep(0.5) # Wait for 500 milliseconds
             xapp_control_ricbypass.send_to_socket(buf)
-            
             timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-            value = r_buf 
-
             data = [timestamp, value]
             append_to_csv(csv_filename, data)
 
