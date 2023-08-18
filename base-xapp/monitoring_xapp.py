@@ -24,7 +24,6 @@ def main():
 
     csv_filename = 'data.csv'
 
-    # Write header to the CSV file (if needed)
     with open(csv_filename, 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(['Timestamp', 'Value'])
@@ -42,6 +41,7 @@ def main():
                     ue_list = i.ue_list
 
                 if ue_list is not None:
+                    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NOT NONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
                     for ue_info in ue_list.ue_info:
                         ue_rsrp = ue_info.ue_rsrp
                         
