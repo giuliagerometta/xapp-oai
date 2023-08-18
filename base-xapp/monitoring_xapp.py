@@ -61,7 +61,7 @@ def main():
 
 
 def append_to_csv(filename, data):
-    with open(filename, 'a', newline=' ') as csvfile:
+    with open(filename, 'a', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(data)
 
