@@ -39,7 +39,7 @@ def main():
             xapp_control_ricbypass.send_to_socket(buf)
             
             timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-            value = r_buf  # Replace this with your actual data
+            value = r_buf 
 
             data = [timestamp, value]
             append_to_csv(csv_filename, data)
