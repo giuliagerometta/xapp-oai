@@ -25,10 +25,19 @@ def main():
     
 
     csv_filename = 'data.csv'
+    timestamps = []
+    rsrps = []
+
+    file_path = "my_file.txt"
+    content = "Hello, this is some content for the file."
+
     try:
-        with open(csv_filename, 'w', newline='') as csvfile:
-            csvwriter = csv.writer(csvfile)
-            csvwriter.writerow(['Timestamp', 'Value'])
+        #with open(csv_filename, 'w', newline='') as csvfile:
+        #    csvwriter = csv.writer(csvfile)
+        #    csvwriter.writerow(['Timestamp', 'Value'])
+        with open(file_path, "w") as txtfile:
+            txtfile.write(content) 
+
     except Exception as e:
         print("Error creating CSV file:", e)
 
@@ -36,18 +45,32 @@ def main():
         while True:
             r_buf = xapp_control_ricbypass.receive_from_socket()
             ran_ind_resp = RAN_indication_response()
-            ran_ind_resp.ParseFromString(r_buf)            
+            ran_ind_resp.ParseFromString(r_buf)
+
             timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-            data = [timestamp]
-            append_to_csv(csv_filename, data)
+            timestamps.append(timestamp)
+
+            ue_list = None  
+
+            for i in ran_ind_resp.param_map:
+                if i.HasField('ue_list'):
+                    ue_list = i.ue_list
+
+                if ue_list is not None:
+                    for ue_info in ue_list.ue_info:
+                        rsrps.append(ue_info.ue_rsrp)
+                        
+                        #timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+                        #data = [timestamp, ue_rsrp]
+                        #append_to_csv(csv_filename, data)
+            
             print(ran_ind_resp)
             sleep(0.5) # Wait for 500 milliseconds
             xapp_control_ricbypass.send_to_socket(buf)
             
     except KeyboardInterrupt:
         print("Data collection stopped.")
-        print("Closing the CSV file.")
-        csvfile.close()
+        #csvfile.close()
 
 
 def append_to_csv(filename, data):
@@ -57,4 +80,3 @@ def append_to_csv(filename, data):
 
 if __name__ == '__main__':
     main()
-
