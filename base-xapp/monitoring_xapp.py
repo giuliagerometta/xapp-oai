@@ -28,7 +28,7 @@ def main():
     timestamps = []
     rsrps = []
 
-    file_path = "my_file.txt"
+    file_path = "sample.txt"
     content = "Hello, this is some content for the file."
 
     try:

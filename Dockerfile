@@ -20,4 +20,7 @@ RUN git checkout mrn-base
 RUN chmod +x submodule-sync.sh
 RUN ./submodule-sync.sh
 
+# Create a text file
+RUN echo "Hello, this is a sample text file." > /base-xapp/sample.txt
+
 ENTRYPOINT ["/bin/bash"]
