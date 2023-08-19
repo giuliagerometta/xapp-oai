@@ -36,22 +36,10 @@ def main():
         while True:
             r_buf = xapp_control_ricbypass.receive_from_socket()
             ran_ind_resp = RAN_indication_response()
-            ran_ind_resp.ParseFromString(r_buf)
-
-            ue_list = None  
-
-            for i in ran_ind_resp.param_map:
-                if i.HasField('ue_list'):
-                    ue_list = i.ue_list
-
-                if ue_list is not None:
-                    for ue_info in ue_list.ue_info:
-                        ue_rsrp = ue_info.ue_rsrp
-                        
-                        timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-                        data = [timestamp, ue_rsrp]
-                        append_to_csv(csv_filename, data)
-            
+            ran_ind_resp.ParseFromString(r_buf)            
+            timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+            data = [timestamp]
+            append_to_csv(csv_filename, data)
             print(ran_ind_resp)
             sleep(0.5) # Wait for 500 milliseconds
             xapp_control_ricbypass.send_to_socket(buf)
