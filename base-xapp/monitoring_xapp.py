@@ -24,14 +24,10 @@ def main():
     xapp_control_ricbypass.send_to_socket(buf)
 
 
-
-    with open('data.csv', 'a') as file:
-        file_write = csv.writer(file)
-        file_write.writerow(['timestamp', 'data'])
-
-
     try:
         while True:
+            with open('data.csv', 'a') as file:
+                file_write = csv.writer(file)
             r_buf = xapp_control_ricbypass.receive_from_socket()
             ran_ind_resp = RAN_indication_response()
             ran_ind_resp.ParseFromString(r_buf)
