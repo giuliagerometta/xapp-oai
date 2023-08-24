@@ -46,8 +46,9 @@ def main():
                     for ue_info in ue_list.ue_info:
                         timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
                         data = [timestamp, ue_info.ue_rsrp]
-                        file_write = csv.writer(file)
-                        file_write.writerow(data)
+                        with open('data.csv', 'a') as file:
+                            file_write = csv.writer(file)
+                            file_write.writerow(data)
             
             print(ran_ind_resp)
             sleep(0.5) # Wait for 500 milliseconds
