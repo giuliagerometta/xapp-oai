@@ -27,7 +27,8 @@ def main():
 
     with open('data.csv', 'a') as file:
         file_write = csv.writer(file)
-        file_write.writerow(['timestamp', 'data'])
+        #file_write.writerow(['timestamp', 'data'])
+        file_write.writerow('ciao')
 
 
     try:
