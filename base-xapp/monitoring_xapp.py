@@ -27,8 +27,7 @@ def main():
 
     with open('data.csv', 'a') as file:
         file_write = csv.writer(file)
-        #file_write.writerow(['timestamp', 'data'])
-        file_write.writerow('ciao')
+        file_write.writerow(['timestamp', 'data'])
 
 
     try:
@@ -47,9 +46,7 @@ def main():
                     for ue_info in ue_list.ue_info:
                         timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
                         data = [timestamp, ue_info.ue_rsrp]
-                        with open('data.csv', 'a') as file:
-                            file_write = csv.writer(file)
-                            file_write.writerow(data)
+                        file_write.writerow(data)
             
             print(ran_ind_resp)
             sleep(0.5) # Wait for 500 milliseconds
