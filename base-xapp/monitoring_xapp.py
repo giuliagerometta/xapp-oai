@@ -22,33 +22,19 @@ def main():
     master_mess.ran_indication_request.CopyFrom(inner_mess)
     buf = master_mess.SerializeToString()
     xapp_control_ricbypass.send_to_socket(buf)
-    
 
-    csv_filename = 'data.csv'
-    timestamps = []
-    rsrps = []
 
-    file_path = "sample.txt"
-    content = "Hello, this is some content for the file."
 
-    try:
-        #with open(csv_filename, 'w', newline='') as csvfile:
-        #    csvwriter = csv.writer(csvfile)
-        #    csvwriter.writerow(['Timestamp', 'Value'])
-        with open(file_path, "w") as txtfile:
-            txtfile.write(content) 
+    with open('data.csv', 'a') as file:
+        file_write = csv.writer(file)
+        file_write.writerow('timestamp', 'data')
 
-    except Exception as e:
-        print("Error creating CSV file:", e)
 
     try:
         while True:
             r_buf = xapp_control_ricbypass.receive_from_socket()
             ran_ind_resp = RAN_indication_response()
             ran_ind_resp.ParseFromString(r_buf)
-
-            timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-            timestamps.append(timestamp)
 
             ue_list = None  
 
@@ -58,11 +44,10 @@ def main():
 
                 if ue_list is not None:
                     for ue_info in ue_list.ue_info:
-                        rsrps.append(ue_info.ue_rsrp)
-                        
-                        #timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-                        #data = [timestamp, ue_rsrp]
-                        #append_to_csv(csv_filename, data)
+                        timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+                        data = [timestamp, ue_info.ue_rsrp]
+                        file_write = csv.writer(file)
+                        file_write.writerow(data)
             
             print(ran_ind_resp)
             sleep(0.5) # Wait for 500 milliseconds
@@ -73,10 +58,10 @@ def main():
         #csvfile.close()
 
 
-def append_to_csv(filename, data):
-    with open(filename, 'a', newline='') as csvfile:
-        csvwriter = csv.writer(csvfile)
-        csvwriter.writerow(data)
+#def append_to_csv(filename, data):
+#    with open(filename, 'a', newline='') as csvfile:
+#        csvwriter = csv.writer(csvfile)
+#        csvwriter.writerow(data)
 
 if __name__ == '__main__':
     main()
