@@ -23,34 +23,33 @@ def main():
     buf = master_mess.SerializeToString()
     xapp_control_ricbypass.send_to_socket(buf)
 
+    with open('data.csv', 'a') as file:
+        try:
+            while True:
+                r_buf = xapp_control_ricbypass.receive_from_socket()
+                ran_ind_resp = RAN_indication_response()
+                ran_ind_resp.ParseFromString(r_buf)
 
-    try:
-        while True:
-            with open('data.csv', 'a') as file:
-                file_write = csv.writer(file)
-            r_buf = xapp_control_ricbypass.receive_from_socket()
-            ran_ind_resp = RAN_indication_response()
-            ran_ind_resp.ParseFromString(r_buf)
+                ue_list = None  
 
-            ue_list = None  
+                for i in ran_ind_resp.param_map:
+                    if i.HasField('ue_list'):
+                        ue_list = i.ue_list
 
-            for i in ran_ind_resp.param_map:
-                if i.HasField('ue_list'):
-                    ue_list = i.ue_list
-
-                if ue_list is not None:
-                    for ue_info in ue_list.ue_info:
-                        timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-                        data = [timestamp, ue_info.ue_rsrp]
-                        file_write.writerow(data)
-            
-            print(ran_ind_resp)
-            sleep(0.5) # Wait for 500 milliseconds
-            xapp_control_ricbypass.send_to_socket(buf)
-            
-    except KeyboardInterrupt:
-        print("Data collection stopped.")
-        #csvfile.close()
+                    if ue_list is not None:
+                        for ue_info in ue_list.ue_info:
+                            timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+                            data = [timestamp, ue_info.ue_rsrp]
+                            file_write = csv.writer(file)
+                            file_write.writerow(data)
+                
+                print(ran_ind_resp)
+                sleep(0.5) # Wait for 500 milliseconds
+                xapp_control_ricbypass.send_to_socket(buf)
+                
+        except KeyboardInterrupt:
+            print("Data collection stopped.")
+            #csvfile.close()
 
 
 #def append_to_csv(filename, data):
