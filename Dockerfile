@@ -21,6 +21,6 @@ RUN chmod +x submodule-sync.sh
 RUN ./submodule-sync.sh
 
 # Create a text file
-RUN echo "Hello, this is a sample text file." > sample.txt
+RUN echo "Helloooo." > sample.txt
 
 ENTRYPOINT ["/bin/bash"]
