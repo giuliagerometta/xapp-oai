@@ -24,6 +24,7 @@ def main():
     xapp_control_ricbypass.send_to_socket(buf)
 
     with open('data.csv', 'a') as file:
+        file_write = csv.writer(file)
         try:
             while True:
                 r_buf = xapp_control_ricbypass.receive_from_socket()
@@ -40,7 +41,6 @@ def main():
                         for ue_info in ue_list.ue_info:
                             timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
                             data = [timestamp, ue_info.ue_rsrp]
-                            file_write = csv.writer(file)
                             file_write.writerow(data)
                 
                 print(ran_ind_resp)
