@@ -38,10 +38,29 @@ def main():
                         ue_list = i.ue_list
 
                     if ue_list is not None:
+                        prbs = ue_list.allocated_prbs
+                        rsrp_avg = 0
+                        ber_up_avg = 0
+                        ber_down_avg = 0
+                        mcs_up_avg = 0
+                        mcs_down_avg = 0
+
                         for ue_info in ue_list.ue_info:
-                            timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-                            data = [timestamp, ue_info.ue_rsrp]
-                            file_write.writerow(data)
+                            rsrp_avg += ue_info.ue_rsrp
+                            ber_up_avg += ue_info.ue_ber_up
+                            ber_down_avg += ue_info.ue_ber_down
+                            mcs_up_avg += ue_info.ue_mcs_up
+                            mcs_down_avg += ue_info.ue_mcs_down
+
+                        rsrp_avg /= prbs
+                        ber_up_avg /= prbs
+                        ber_down_avg /= prbs
+                        mcs_up_avg /= prbs
+                        mcs_down_avg /= prbs
+
+                        timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+                        data = [timestamp, rsrp_avg, ber_up_avg, ber_down_avg, mcs_up_avg, mcs_down_avg]
+                        file_write.writerow(data)
                 
                 print(ran_ind_resp)
                 sleep(0.5) # Wait for 500 milliseconds
@@ -49,13 +68,6 @@ def main():
                 
         except KeyboardInterrupt:
             print("Data collection stopped.")
-            #csvfile.close()
-
-
-#def append_to_csv(filename, data):
-#    with open(filename, 'a', newline='') as csvfile:
-#        csvwriter = csv.writer(csvfile)
-#        csvwriter.writerow(data)
 
 if __name__ == '__main__':
     main()
