@@ -52,15 +52,17 @@ def main():
                             ber_down_avg += ue_info.ue_ber_down
                             mcs_up_avg += ue_info.ue_mcs_up
                             mcs_down_avg += ue_info.ue_mcs_down
+                            cell_load_avg += ue_info.cell_load
 
                         rsrp_avg /= prbs
                         ber_up_avg /= prbs
                         ber_down_avg /= prbs
                         mcs_up_avg /= prbs
                         mcs_down_avg /= prbs
+                        cell_load_avg /= prbs
 
                         timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-                        data = [timestamp, rsrp_avg, ber_up_avg, ber_down_avg, mcs_up_avg, mcs_down_avg, ue_info.cell_load]
+                        data = [timestamp, rsrp_avg, ber_up_avg, ber_down_avg, mcs_up_avg, mcs_down_avg, cell_load_avg]
                         file_write.writerow(data)
                 
                 print(ran_ind_resp)
