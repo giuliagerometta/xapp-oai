@@ -25,6 +25,7 @@ def main():
 
     with open('data.csv', 'a') as file:
         file_write = csv.writer(file)
+        file_write.writerow("timestamp", "rsrp_avg", "ber_up_avg", "ber_down_avg", "mcs_up_avg", "mcs_down_avg", "cell load")
         try:
             while True:
                 r_buf = xapp_control_ricbypass.receive_from_socket()
@@ -59,7 +60,7 @@ def main():
                         mcs_down_avg /= prbs
 
                         timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-                        data = [timestamp, rsrp_avg, ber_up_avg, ber_down_avg, mcs_up_avg, mcs_down_avg]
+                        data = [timestamp, rsrp_avg, ber_up_avg, ber_down_avg, mcs_up_avg, mcs_down_avg, ue_info.cell_load]
                         file_write.writerow(data)
                 
                 print(ran_ind_resp)
