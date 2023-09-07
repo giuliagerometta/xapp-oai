@@ -25,7 +25,7 @@ def main():
 
     with open('data.csv', 'a') as file:
         file_write = csv.writer(file)
-        file_write.writerow("timestamp", "rsrp_avg", "ber_up_avg", "ber_down_avg", "mcs_up_avg", "mcs_down_avg", "cell load")
+        file_write.writerow(['Timestamp', 'RSRP', 'BER_UP', 'BER_DOWN', 'MCS_UP', 'MCS_DOWN', 'CELL_LOAD'])
         try:
             while True:
                 r_buf = xapp_control_ricbypass.receive_from_socket()
