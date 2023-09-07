@@ -4,7 +4,8 @@ RUN apt-get update && apt-get install -y \
     git \
     python3.8 \
     python3-pip \
-    protobuf-compiler
+    protobuf-compiler \
+    vim
 
 # install protobuf python module
 RUN python3 -m pip install protobuf==3.20.*
