@@ -45,6 +45,7 @@ def main():
                         ber_down_avg = 0
                         mcs_up_avg = 0
                         mcs_down_avg = 0
+                        cell_load_avg = 0
 
                         for ue_info in ue_list.ue_info:
                             rsrp_avg += ue_info.ue_rsrp
